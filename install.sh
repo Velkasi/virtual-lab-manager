@@ -6,11 +6,11 @@
 set -e
 
 # Couleurs pour l'affichage
-RED=\'\\033[0;31m\'
-GREEN=\'\\033[0;32m\'
-YELLOW=\'\\033[1;33m\'
-BLUE=\'\\033[0;34m\'
-NC=\'\\033[0m\' # No Color
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
 
 # Variables de configuration
 INSTALL_DIR="/opt/virtual-lab-manager"
@@ -69,10 +69,10 @@ install_postgresql() {
     systemctl enable --now postgresql
 
     log "Configuration de la base de données..."
-    sudo -u postgres psql -tc "SELECT 1 FROM pg_database WHERE datname = \'$DB_NAME\';" | grep -q 1 || \
+    sudo -u postgres psql -tc "SELECT 1 FROM pg_database WHERE datname = '$DB_NAME';" | grep -q 1 ||
         sudo -u postgres psql -c "CREATE DATABASE $DB_NAME;"
-    sudo -u postgres psql -tc "SELECT 1 FROM pg_roles WHERE rolname = \'$DB_USER\';" | grep -q 1 || \
-        sudo -u postgres psql -c "CREATE USER $DB_USER WITH PASSWORD \'$DB_PASSWORD\';"
+    sudo -u postgres psql -tc "SELECT 1 FROM pg_roles WHERE rolname = '$DB_USER';" | grep -q 1 ||
+        sudo -u postgres psql -c "CREATE USER $DB_USER WITH PASSWORD '$DB_PASSWORD';"
     sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE $DB_NAME TO $DB_USER;"
     sudo -u postgres psql -c "ALTER USER $DB_USER CREATEDB;"
 }
