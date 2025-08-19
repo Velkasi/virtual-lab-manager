@@ -52,7 +52,7 @@ check_debian() {
 update_system() {
     log "Mise à jour du système..."
     apt update && apt upgrade -y
-    apt install -y curl wget gnupg2 software-properties-common apt-transport-https ca-certificates
+    apt install -y curl wget gnupg2 software-properties-common apt-transport-https ca-certificates passwd
 }
 
 # Installation de Python et pip
@@ -156,16 +156,24 @@ install_novnc() {
 # Création de l'utilisateur système
 create_user() {
     log "Création de l'utilisateur système $SERVICE_USER..."
-    
+
+    # Créer les groupes si nécessaire
+    for grp in libvirt kvm; do
+        if ! getent group $grp >/dev/null; then
+            groupadd $grp
+        fi
+    done
+
+    # Créer l'utilisateur si il n'existe pas
     if ! id "$SERVICE_USER" &>/dev/null; then
         useradd -r -s /bin/bash -d /home/$SERVICE_USER -m $SERVICE_USER
         usermod -aG libvirt,kvm $SERVICE_USER
     fi
-    
+
     # Créer les répertoires nécessaires
     mkdir -p /home/$SERVICE_USER/.ssh
     chown -R $SERVICE_USER:$SERVICE_USER /home/$SERVICE_USER
-    
+
     log "Utilisateur $SERVICE_USER créé"
 }
 
