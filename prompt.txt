@@ -96,7 +96,6 @@ Gestion multi-utilisateurs avec authentification (OAuth2 ou LDAP).
 
 
 SORTIE DEBUGG
-
 root@lab-test:/home/test/Téléchargements/virtual-lab-manager-main# bash install.sh
 + RED='\033[0;31m'
 + GREEN='\033[0;32m'
@@ -108,7 +107,7 @@ root@lab-test:/home/test/Téléchargements/virtual-lab-manager-main# bash instal
 + DB_NAME=virtual_lab_manager
 + DB_USER=vlm_user
 ++ openssl rand -base64 32
-+ DB_PASSWORD=+wXi+8AEWBhfazKUqj6+Rq+7EF4FGsAyyqYedM3htJg=
++ DB_PASSWORD=sYC3MIffV65skeK9pFx9jWfKP5Yx24Zn4m+OHHsLNc4=
 + check_root
 + [[ 0 -ne 0 ]]
 + check_debian
@@ -122,10 +121,10 @@ root@lab-test:/home/test/Téléchargements/virtual-lab-manager-main# bash instal
 [INFO] Mise à jour du système...
 + apt update
 Atteint :1 http://security.debian.org/debian-security bookworm-security InRelease
-Atteint :2 http://deb.debian.org/debian bookworm InRelease                                                                                
+Atteint :2 http://deb.debian.org/debian bookworm InRelease                                                                                                       
 Atteint :3 http://deb.debian.org/debian bookworm-updates InRelease                                                                                               
 Atteint :4 https://apt.releases.hashicorp.com bookworm InRelease                                                                                                 
-Atteint :5 https://deb.nodesource.com/node_20.x nodistro InRelease                                                                              
+Atteint :5 https://deb.nodesource.com/node_20.x nodistro InRelease                                                    
 Lecture des listes de paquets... Fait
 Construction de l'arbre des dépendances... Fait
 Lecture des informations d'état... Fait      
@@ -182,12 +181,12 @@ python3-pip est déjà la version la plus récente (23.0.1+dfsg-1).
 [INFO] Installation de Node.js 20...
 + curl -fsSL https://deb.nodesource.com/setup_20.x
 + bash -
-2025-08-19 16:12:47 - Installing pre-requisites
-Atteint :1 http://deb.debian.org/debian bookworm InRelease
-Atteint :2 http://security.debian.org/debian-security bookworm-security InRelease                                                                                
+2025-08-19 16:18:48 - Installing pre-requisites
+Atteint :1 http://security.debian.org/debian-security bookworm-security InRelease
+Atteint :2 http://deb.debian.org/debian bookworm InRelease                                                                                                       
 Atteint :3 http://deb.debian.org/debian bookworm-updates InRelease                                                                                               
 Atteint :4 https://apt.releases.hashicorp.com bookworm InRelease                                                                                                 
-Atteint :5 https://deb.nodesource.com/node_20.x nodistro InRelease                                                                              
+Atteint :5 https://deb.nodesource.com/node_20.x nodistro InRelease                              
 Lecture des listes de paquets... Fait
 Lecture des listes de paquets... Fait
 Construction de l'arbre des dépendances... Fait
@@ -197,16 +196,16 @@ ca-certificates est déjà la version la plus récente (20230311+deb12u1).
 curl est déjà la version la plus récente (7.88.1-10+deb12u12).
 gnupg est déjà la version la plus récente (2.2.40-1.1).
 0 mis à jour, 0 nouvellement installés, 0 à enlever et 0 non mis à jour.
-Atteint :1 http://security.debian.org/debian-security bookworm-security InRelease
-Atteint :2 http://deb.debian.org/debian bookworm InRelease                                                                                                       
+Atteint :1 http://deb.debian.org/debian bookworm InRelease
+Atteint :2 http://security.debian.org/debian-security bookworm-security InRelease                                                                                
 Atteint :3 http://deb.debian.org/debian bookworm-updates InRelease                                                                                               
 Atteint :4 https://apt.releases.hashicorp.com bookworm InRelease                                                                                                 
-Atteint :5 https://deb.nodesource.com/node_20.x nodistro InRelease                              
+Atteint :5 https://deb.nodesource.com/node_20.x nodistro InRelease                                                                              
 Lecture des listes de paquets... Fait
-2025-08-19 16:12:48 - Repository configured successfully.
-2025-08-19 16:12:48 - To install Node.js, run: apt-get install nodejs -y
-2025-08-19 16:12:48 - You can use N|solid Runtime as a node.js alternative
-2025-08-19 16:12:48 - To install N|solid Runtime, run: apt-get install nsolid -y 
+2025-08-19 16:18:50 - Repository configured successfully.
+2025-08-19 16:18:50 - To install Node.js, run: apt-get install nodejs -y
+2025-08-19 16:18:50 - You can use N|solid Runtime as a node.js alternative
+2025-08-19 16:18:50 - To install N|solid Runtime, run: apt-get install nsolid -y 
 
 + apt install -y nodejs
 Lecture des listes de paquets... Fait
@@ -216,7 +215,7 @@ nodejs est déjà la version la plus récente (20.19.4-1nodesource1).
 0 mis à jour, 0 nouvellement installés, 0 à enlever et 0 non mis à jour.
 + npm install -g pnpm
 
-changed 1 package in 691ms
+changed 1 package in 746ms
 
 1 package is looking for funding
   run `npm fund` for details
@@ -250,7 +249,7 @@ CREATE DATABASE
 + sudo -u postgres psql -tc 'SELECT 1 FROM pg_roles WHERE rolname = '\''vlm_user'\'';'
 + grep -q 1
 could not change directory to "/home/test/Téléchargements/virtual-lab-manager-main": Permission non accordée
-+ sudo -u postgres psql -c 'CREATE USER vlm_user WITH PASSWORD '\''+wXi+8AEWBhfazKUqj6+Rq+7EF4FGsAyyqYedM3htJg='\'';'
++ sudo -u postgres psql -c 'CREATE USER vlm_user WITH PASSWORD '\''sYC3MIffV65skeK9pFx9jWfKP5Yx24Zn4m+OHHsLNc4='\'';'
 could not change directory to "/home/test/Téléchargements/virtual-lab-manager-main": Permission non accordée
 CREATE ROLE
 + sudo -u postgres psql -c 'GRANT ALL PRIVILEGES ON DATABASE virtual_lab_manager TO vlm_user;'
@@ -265,19 +264,19 @@ ALTER ROLE
 [INFO] Installation de Terraform...
 + wget -O- https://apt.releases.hashicorp.com/gpg
 + gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-Le fichier « /usr/share/keyrings/hashicorp-archive-keyring.gpg » existe. --2025-08-19 16:12:50--  https://apt.releases.hashicorp.com/gpg
-Faut-il réécrire par-dessus ? (o/N) Résolution de apt.releases.hashicorp.com (apt.releases.hashicorp.com)… 2600:9000:244f:a200:18:566b:ecc0:93a1, 2600:9000:244f:de00:18:566b:ecc0:93a1, 2600:9000:244f:9a00:18:566b:ecc0:93a1, ...
-Connexion à apt.releases.hashicorp.com (apt.releases.hashicorp.com)|2600:9000:244f:a200:18:566b:ecc0:93a1|:443… connecté.
+Le fichier « /usr/share/keyrings/hashicorp-archive-keyring.gpg » existe. Faut-il réécrire par-dessus ? (o/N) --2025-08-19 16:18:52--  https://apt.releases.hashicorp.com/gpg
+Résolution de apt.releases.hashicorp.com (apt.releases.hashicorp.com)… 2600:9000:244f:a600:18:566b:ecc0:93a1, 2600:9000:244f:9200:18:566b:ecc0:93a1, 2600:9000:244f:6200:18:566b:ecc0:93a1, ...
+Connexion à apt.releases.hashicorp.com (apt.releases.hashicorp.com)|2600:9000:244f:a600:18:566b:ecc0:93a1|:443… connecté.
 requête HTTP transmise, en attente de la réponse… 200 OK
 Taille : 3980 (3,9K) [binary/octet-stream]
 Sauvegarde en : « STDOUT »
 
 -                                        100%[================================================================================>]   3,89K  --.-KB/s    ds 0s      
 
-2025-08-19 16:12:50 (634 MB/s) — envoi vers sortie standard [3980/3980]
+2025-08-19 16:18:52 (523 MB/s) — envoi vers sortie standard [3980/3980]
 
 
-Entrez le nouveau nom de fichier: install_run
+Entrez le nouveau nom de fichier: run_lab
 + tee /etc/apt/sources.list.d/hashicorp.list
 ++ lsb_release -cs
 + echo 'deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com bookworm main'
@@ -412,7 +411,7 @@ Already up to date
 │                                                                                            │
 ╰────────────────────────────────────────────────────────────────────────────────────────────╯
 
-Done in 623ms using pnpm v10.4.1
+Done in 625ms using pnpm v10.4.1
 + sudo -u vlm pnpm run build
 
 > virtual-lab-frontend@0.0.0 build /opt/virtual-lab-manager/frontend/virtual-lab-frontend
@@ -428,7 +427,9 @@ dist/assets/index-D6fpj8ot.js   748.68 kB │ gzip: 219.70 kB
 - Using dynamic import() to code-split the application
 - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
 - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
-✓ built in 2.52s
+✓ built in 2.87s
++ configure_environment
+install.sh: ligne 228: configure_environment : commande introuvable
 + setup_services
 + log 'Configuration des services systemd...'
 + echo -e '\033[0;32m[INFO]\033[0m Configuration des services systemd...'
@@ -440,11 +441,11 @@ dist/assets/index-D6fpj8ot.js   748.68 kB │ gzip: 219.70 kB
 Job for vlm-backend.service failed because of unavailable resources or another system error.
 See "systemctl status vlm-backend.service" and "journalctl -xeu vlm-backend.service" for details.
 + systemctl enable --now vlm-frontend
-Created symlink /etc/systemd/system/multi-user.target.wants/vlm-frontend.service → /etc/systemd/system/vlm-frontend.service.
 + log 'Installation terminée !'
 + echo -e '\033[0;32m[INFO]\033[0m Installation terminée !'
 [INFO] Installation terminée !
 + echo -e '\033[0;34mAccès via : http://localhost:3000\033[0m'
 Accès via : http://localhost:3000
-+ echo -e '\033[1;33mDB User: vlm_user / Password: +wXi+8AEWBhfazKUqj6+Rq+7EF4FGsAyyqYedM3htJg=\033[0m'
-DB User: vlm_user / Password: +wXi+8AEWBhfazKUqj6+Rq+7EF4FGsAyyqYedM3htJg=
++ echo -e '\033[1;33mDB User: vlm_user / Password: sYC3MIffV65skeK9pFx9jWfKP5Yx24Zn4m+OHHsLNc4=\033[0m'
+DB User: vlm_user / Password: sYC3MIffV65skeK9pFx9jWfKP5Yx24Zn4m+OHHsLNc4=
+
