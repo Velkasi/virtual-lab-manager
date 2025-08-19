@@ -104,8 +104,16 @@ install_virtualization() {
 # Dépendances libvirt-python
 install_libvirt_python_dependencies() {
     log "Installation des dépendances pour libvirt-python..."
-    apt install -y pkg-config libvirt-dev python3-dev build-essential
+    apt install -y \
+        pkg-config \
+        libvirt-dev \
+        python3-dev \
+        build-essential \
+        libxml2-dev \
+        libxslt1-dev \
+        zlib1g-dev
 }
+
 
 # Installation noVNC
 install_novnc() {
