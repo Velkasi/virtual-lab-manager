@@ -96,356 +96,47 @@ Gestion multi-utilisateurs avec authentification (OAuth2 ou LDAP).
 
 
 SORTIE DEBUGG
-root@lab-test:/home/test/Téléchargements/virtual-lab-manager-main# bash install.sh
-+ RED='\033[0;31m'
-+ GREEN='\033[0;32m'
-+ YELLOW='\033[1;33m'
-+ BLUE='\033[0;34m'
-+ NC='\033[0m'
-+ INSTALL_DIR=/opt/virtual-lab-manager
-+ SERVICE_USER=vlm
-+ DB_NAME=virtual_lab_manager
-+ DB_USER=vlm_user
-++ openssl rand -base64 32
-+ DB_PASSWORD=sYC3MIffV65skeK9pFx9jWfKP5Yx24Zn4m+OHHsLNc4=
-+ check_root
-+ [[ 0 -ne 0 ]]
-+ check_debian
-+ grep -q 'Debian\|Ubuntu' /etc/os-release
-+ log 'Distribution compatible détectée'
-+ echo -e '\033[0;32m[INFO]\033[0m Distribution compatible détectée'
-[INFO] Distribution compatible détectée
-+ update_system
-+ log 'Mise à jour du système...'
-+ echo -e '\033[0;32m[INFO]\033[0m Mise à jour du système...'
-[INFO] Mise à jour du système...
-+ apt update
-Atteint :1 http://security.debian.org/debian-security bookworm-security InRelease
-Atteint :2 http://deb.debian.org/debian bookworm InRelease                                                                                                       
-Atteint :3 http://deb.debian.org/debian bookworm-updates InRelease                                                                                               
-Atteint :4 https://apt.releases.hashicorp.com bookworm InRelease                                                                                                 
-Atteint :5 https://deb.nodesource.com/node_20.x nodistro InRelease                                                    
-Lecture des listes de paquets... Fait
-Construction de l'arbre des dépendances... Fait
-Lecture des informations d'état... Fait      
-Tous les paquets sont à jour.
-+ apt upgrade -y
-Lecture des listes de paquets... Fait
-Construction de l'arbre des dépendances... Fait
-Lecture des informations d'état... Fait      
-Calcul de la mise à jour... Fait
-0 mis à jour, 0 nouvellement installés, 0 à enlever et 0 non mis à jour.
-+ apt install -y curl wget gnupg2 software-properties-common apt-transport-https ca-certificates passwd git
-Lecture des listes de paquets... Fait
-Construction de l'arbre des dépendances... Fait
-Lecture des informations d'état... Fait      
-curl est déjà la version la plus récente (7.88.1-10+deb12u12).
-wget est déjà la version la plus récente (1.21.3-1+deb12u1).
-gnupg2 est déjà la version la plus récente (2.2.40-1.1).
-software-properties-common est déjà la version la plus récente (0.99.30-4.1~deb12u1).
-apt-transport-https est déjà la version la plus récente (2.6.1).
-ca-certificates est déjà la version la plus récente (20230311+deb12u1).
-passwd est déjà la version la plus récente (1:4.13+dfsg1-1+deb12u1).
-git est déjà la version la plus récente (1:2.39.5-0+deb12u2).
-0 mis à jour, 0 nouvellement installés, 0 à enlever et 0 non mis à jour.
-+ create_user
-+ log 'Création de l'\''utilisateur vlm...'
-+ echo -e '\033[0;32m[INFO]\033[0m Création de l'\''utilisateur vlm...'
-[INFO] Création de l'utilisateur vlm...
-+ export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/sbin:/sbin
-+ PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/sbin:/sbin
-+ for grp in libvirt kvm
-+ getent group libvirt
-+ for grp in libvirt kvm
-+ getent group kvm
-+ id vlm
-+ mkdir -p /home/vlm/.ssh
-+ chown -R vlm:vlm /home/vlm
-+ install_python
-+ log 'Installation de Python 3.11 et pip...'
-+ echo -e '\033[0;32m[INFO]\033[0m Installation de Python 3.11 et pip...'
-[INFO] Installation de Python 3.11 et pip...
-+ apt install -y python3.11 python3.11-venv python3.11-dev python3-pip
-Lecture des listes de paquets... Fait
-Construction de l'arbre des dépendances... Fait
-Lecture des informations d'état... Fait      
-python3.11 est déjà la version la plus récente (3.11.2-6+deb12u6).
-python3.11-venv est déjà la version la plus récente (3.11.2-6+deb12u6).
-python3.11-dev est déjà la version la plus récente (3.11.2-6+deb12u6).
-python3-pip est déjà la version la plus récente (23.0.1+dfsg-1).
-0 mis à jour, 0 nouvellement installés, 0 à enlever et 0 non mis à jour.
-+ command -v python3
-+ install_nodejs
-+ log 'Installation de Node.js 20...'
-+ echo -e '\033[0;32m[INFO]\033[0m Installation de Node.js 20...'
-[INFO] Installation de Node.js 20...
-+ curl -fsSL https://deb.nodesource.com/setup_20.x
-+ bash -
-2025-08-19 16:18:48 - Installing pre-requisites
-Atteint :1 http://security.debian.org/debian-security bookworm-security InRelease
-Atteint :2 http://deb.debian.org/debian bookworm InRelease                                                                                                       
-Atteint :3 http://deb.debian.org/debian bookworm-updates InRelease                                                                                               
-Atteint :4 https://apt.releases.hashicorp.com bookworm InRelease                                                                                                 
-Atteint :5 https://deb.nodesource.com/node_20.x nodistro InRelease                              
-Lecture des listes de paquets... Fait
-Lecture des listes de paquets... Fait
-Construction de l'arbre des dépendances... Fait
-Lecture des informations d'état... Fait      
-apt-transport-https est déjà la version la plus récente (2.6.1).
-ca-certificates est déjà la version la plus récente (20230311+deb12u1).
-curl est déjà la version la plus récente (7.88.1-10+deb12u12).
-gnupg est déjà la version la plus récente (2.2.40-1.1).
-0 mis à jour, 0 nouvellement installés, 0 à enlever et 0 non mis à jour.
-Atteint :1 http://deb.debian.org/debian bookworm InRelease
-Atteint :2 http://security.debian.org/debian-security bookworm-security InRelease                                                                                
-Atteint :3 http://deb.debian.org/debian bookworm-updates InRelease                                                                                               
-Atteint :4 https://apt.releases.hashicorp.com bookworm InRelease                                                                                                 
-Atteint :5 https://deb.nodesource.com/node_20.x nodistro InRelease                                                                              
-Lecture des listes de paquets... Fait
-2025-08-19 16:18:50 - Repository configured successfully.
-2025-08-19 16:18:50 - To install Node.js, run: apt-get install nodejs -y
-2025-08-19 16:18:50 - You can use N|solid Runtime as a node.js alternative
-2025-08-19 16:18:50 - To install N|solid Runtime, run: apt-get install nsolid -y 
 
-+ apt install -y nodejs
-Lecture des listes de paquets... Fait
-Construction de l'arbre des dépendances... Fait
-Lecture des informations d'état... Fait      
-nodejs est déjà la version la plus récente (20.19.4-1nodesource1).
-0 mis à jour, 0 nouvellement installés, 0 à enlever et 0 non mis à jour.
-+ npm install -g pnpm
+root@lab-test:/home/test/Téléchargements/virtual-lab-manager-main# systemctl status vlm-backend.service
+● vlm-backend.service - Virtual Lab Manager Backend
+     Loaded: loaded (/etc/systemd/system/vlm-backend.service; enabled; preset: enabled)
+     Active: activating (auto-restart) (Result: resources) since Tue 2025-08-19 16:24:15 CEST; 5s ago
+        CPU: 0
 
-changed 1 package in 746ms
-
-1 package is looking for funding
-  run `npm fund` for details
-++ node --version
-+ log 'Node.js v20.19.4 et pnpm installés'
-+ echo -e '\033[0;32m[INFO]\033[0m Node.js v20.19.4 et pnpm installés'
-[INFO] Node.js v20.19.4 et pnpm installés
-+ install_postgresql
-+ log 'Installation de PostgreSQL...'
-+ echo -e '\033[0;32m[INFO]\033[0m Installation de PostgreSQL...'
-[INFO] Installation de PostgreSQL...
-+ apt install -y postgresql postgresql-contrib
-Lecture des listes de paquets... Fait
-Construction de l'arbre des dépendances... Fait
-Lecture des informations d'état... Fait      
-postgresql est déjà la version la plus récente (15+248).
-postgresql-contrib est déjà la version la plus récente (15+248).
-0 mis à jour, 0 nouvellement installés, 0 à enlever et 0 non mis à jour.
-+ systemctl enable --now postgresql
-Synchronizing state of postgresql.service with SysV service script with /lib/systemd/systemd-sysv-install.
-Executing: /lib/systemd/systemd-sysv-install enable postgresql
-+ log 'Configuration de la base de données...'
-+ echo -e '\033[0;32m[INFO]\033[0m Configuration de la base de données...'
-[INFO] Configuration de la base de données...
-+ sudo -u postgres psql -tc 'SELECT 1 FROM pg_database WHERE datname = '\''virtual_lab_manager'\'';'
-+ grep -q 1
-could not change directory to "/home/test/Téléchargements/virtual-lab-manager-main": Permission non accordée
-+ sudo -u postgres psql -c 'CREATE DATABASE virtual_lab_manager;'
-could not change directory to "/home/test/Téléchargements/virtual-lab-manager-main": Permission non accordée
-CREATE DATABASE
-+ sudo -u postgres psql -tc 'SELECT 1 FROM pg_roles WHERE rolname = '\''vlm_user'\'';'
-+ grep -q 1
-could not change directory to "/home/test/Téléchargements/virtual-lab-manager-main": Permission non accordée
-+ sudo -u postgres psql -c 'CREATE USER vlm_user WITH PASSWORD '\''sYC3MIffV65skeK9pFx9jWfKP5Yx24Zn4m+OHHsLNc4='\'';'
-could not change directory to "/home/test/Téléchargements/virtual-lab-manager-main": Permission non accordée
-CREATE ROLE
-+ sudo -u postgres psql -c 'GRANT ALL PRIVILEGES ON DATABASE virtual_lab_manager TO vlm_user;'
-could not change directory to "/home/test/Téléchargements/virtual-lab-manager-main": Permission non accordée
-GRANT
-+ sudo -u postgres psql -c 'ALTER USER vlm_user CREATEDB;'
-could not change directory to "/home/test/Téléchargements/virtual-lab-manager-main": Permission non accordée
-ALTER ROLE
-+ install_terraform
-+ log 'Installation de Terraform...'
-+ echo -e '\033[0;32m[INFO]\033[0m Installation de Terraform...'
-[INFO] Installation de Terraform...
-+ wget -O- https://apt.releases.hashicorp.com/gpg
-+ gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-Le fichier « /usr/share/keyrings/hashicorp-archive-keyring.gpg » existe. Faut-il réécrire par-dessus ? (o/N) --2025-08-19 16:18:52--  https://apt.releases.hashicorp.com/gpg
-Résolution de apt.releases.hashicorp.com (apt.releases.hashicorp.com)… 2600:9000:244f:a600:18:566b:ecc0:93a1, 2600:9000:244f:9200:18:566b:ecc0:93a1, 2600:9000:244f:6200:18:566b:ecc0:93a1, ...
-Connexion à apt.releases.hashicorp.com (apt.releases.hashicorp.com)|2600:9000:244f:a600:18:566b:ecc0:93a1|:443… connecté.
-requête HTTP transmise, en attente de la réponse… 200 OK
-Taille : 3980 (3,9K) [binary/octet-stream]
-Sauvegarde en : « STDOUT »
-
--                                        100%[================================================================================>]   3,89K  --.-KB/s    ds 0s      
-
-2025-08-19 16:18:52 (523 MB/s) — envoi vers sortie standard [3980/3980]
-
-
-Entrez le nouveau nom de fichier: run_lab
-+ tee /etc/apt/sources.list.d/hashicorp.list
-++ lsb_release -cs
-+ echo 'deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com bookworm main'
-deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com bookworm main
-+ apt update
-Atteint :1 http://security.debian.org/debian-security bookworm-security InRelease
-Atteint :2 http://deb.debian.org/debian bookworm InRelease                                                                                                       
-Atteint :3 http://deb.debian.org/debian bookworm-updates InRelease                                                                                               
-Atteint :4 https://apt.releases.hashicorp.com bookworm InRelease                                                                                                 
-Atteint :5 https://deb.nodesource.com/node_20.x nodistro InRelease                                                                              
-Lecture des listes de paquets... Fait
-Construction de l'arbre des dépendances... Fait
-Lecture des informations d'état... Fait      
-Tous les paquets sont à jour.
-+ apt install -y terraform
-Lecture des listes de paquets... Fait
-Construction de l'arbre des dépendances... Fait
-Lecture des informations d'état... Fait      
-terraform est déjà la version la plus récente (1.12.2-1).
-0 mis à jour, 0 nouvellement installés, 0 à enlever et 0 non mis à jour.
-+ install_ansible
-+ log 'Installation d'\''Ansible...'
-+ echo -e '\033[0;32m[INFO]\033[0m Installation d'\''Ansible...'
-[INFO] Installation d'Ansible...
-+ apt install -y ansible
-Lecture des listes de paquets... Fait
-Construction de l'arbre des dépendances... Fait
-Lecture des informations d'état... Fait      
-ansible est déjà la version la plus récente (7.7.0+dfsg-3+deb12u1).
-0 mis à jour, 0 nouvellement installés, 0 à enlever et 0 non mis à jour.
-+ install_virtualization
-+ log 'Installation de QEMU/KVM et libvirt...'
-+ echo -e '\033[0;32m[INFO]\033[0m Installation de QEMU/KVM et libvirt...'
-[INFO] Installation de QEMU/KVM et libvirt...
-+ apt install -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virt-manager
-Lecture des listes de paquets... Fait
-Construction de l'arbre des dépendances... Fait
-Lecture des informations d'état... Fait      
-Note : sélection de « qemu-system-x86 » au lieu de « qemu-kvm »
-qemu-system-x86 est déjà la version la plus récente (1:7.2+dfsg-7+deb12u13).
-libvirt-daemon-system est déjà la version la plus récente (9.0.0-4+deb12u2).
-libvirt-clients est déjà la version la plus récente (9.0.0-4+deb12u2).
-bridge-utils est déjà la version la plus récente (1.7.1-1).
-virt-manager est déjà la version la plus récente (1:4.1.0-2).
-0 mis à jour, 0 nouvellement installés, 0 à enlever et 0 non mis à jour.
-+ export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/sbin:/sbin:/usr/sbin:/sbin
-+ PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/sbin:/sbin:/usr/sbin:/sbin
-+ usermod -aG libvirt vlm
-+ systemctl enable --now libvirtd
-+ install_libvirt_python_dependencies
-+ log 'Installation des dépendances pour libvirt-python...'
-+ echo -e '\033[0;32m[INFO]\033[0m Installation des dépendances pour libvirt-python...'
-[INFO] Installation des dépendances pour libvirt-python...
-+ apt install -y pkg-config libvirt-dev python3-dev build-essential libxml2-dev libxslt1-dev zlib1g-dev
-Lecture des listes de paquets... Fait
-Construction de l'arbre des dépendances... Fait
-Lecture des informations d'état... Fait      
-pkg-config est déjà la version la plus récente (1.8.1-1).
-libvirt-dev est déjà la version la plus récente (9.0.0-4+deb12u2).
-python3-dev est déjà la version la plus récente (3.11.2-1+b1).
-build-essential est déjà la version la plus récente (12.9).
-libxml2-dev est déjà la version la plus récente (2.9.14+dfsg-1.3~deb12u2).
-libxslt1-dev est déjà la version la plus récente (1.1.35-1+deb12u2).
-zlib1g-dev est déjà la version la plus récente (1:1.2.13.dfsg-1).
-0 mis à jour, 0 nouvellement installés, 0 à enlever et 0 non mis à jour.
-+ install_novnc
-+ log 'Installation de noVNC...'
-+ echo -e '\033[0;32m[INFO]\033[0m Installation de noVNC...'
-[INFO] Installation de noVNC...
-+ apt install -y novnc websockify
-Lecture des listes de paquets... Fait
-Construction de l'arbre des dépendances... Fait
-Lecture des informations d'état... Fait      
-novnc est déjà la version la plus récente (1:1.3.0-1).
-websockify est déjà la version la plus récente (0.10.0+dfsg1-4+b1).
-0 mis à jour, 0 nouvellement installés, 0 à enlever et 0 non mis à jour.
-+ mkdir -p /opt/novnc
-+ '[' '!' -d /opt/novnc/noVNC ']'
-+ install_application
-+ log 'Installation de Virtual Lab Manager...'
-+ echo -e '\033[0;32m[INFO]\033[0m Installation de Virtual Lab Manager...'
-[INFO] Installation de Virtual Lab Manager...
-+ mkdir -p /opt/virtual-lab-manager
-+ cp -r . /opt/virtual-lab-manager/
-+ chown -R vlm:vlm /opt/virtual-lab-manager
-+ log 'Backend Python...'
-+ echo -e '\033[0;32m[INFO]\033[0m Backend Python...'
-[INFO] Backend Python...
-+ cd /opt/virtual-lab-manager/backend
-+ sudo -u vlm python3 -m venv venv
-+ sudo -u vlm ./venv/bin/pip install --upgrade pip
-Requirement already satisfied: pip in ./venv/lib/python3.11/site-packages (25.2)
-+ sudo -u vlm ./venv/bin/pip install -r requirements.txt
-Requirement already satisfied: fastapi==0.104.1 in ./venv/lib/python3.11/site-packages (from -r requirements.txt (line 1)) (0.104.1)
-Requirement already satisfied: uvicorn==0.24.0 in ./venv/lib/python3.11/site-packages (from uvicorn[standard]==0.24.0->-r requirements.txt (line 2)) (0.24.0)
-Requirement already satisfied: sqlalchemy==2.0.23 in ./venv/lib/python3.11/site-packages (from -r requirements.txt (line 3)) (2.0.23)
-Requirement already satisfied: alembic==1.12.1 in ./venv/lib/python3.11/site-packages (from -r requirements.txt (line 4)) (1.12.1)
-Requirement already satisfied: psycopg2-binary==2.9.9 in ./venv/lib/python3.11/site-packages (from -r requirements.txt (line 5)) (2.9.9)
-Requirement already satisfied: python-multipart==0.0.6 in ./venv/lib/python3.11/site-packages (from -r requirements.txt (line 6)) (0.0.6)
-Requirement already satisfied: pydantic==2.5.0 in ./venv/lib/python3.11/site-packages (from -r requirements.txt (line 7)) (2.5.0)
-Requirement already satisfied: libvirt-python in ./venv/lib/python3.11/site-packages (from -r requirements.txt (line 8)) (11.6.0)
-Requirement already satisfied: websockets==12.0 in ./venv/lib/python3.11/site-packages (from -r requirements.txt (line 9)) (12.0)
-Requirement already satisfied: anyio<4.0.0,>=3.7.1 in ./venv/lib/python3.11/site-packages (from fastapi==0.104.1->-r requirements.txt (line 1)) (3.7.1)
-Requirement already satisfied: starlette<0.28.0,>=0.27.0 in ./venv/lib/python3.11/site-packages (from fastapi==0.104.1->-r requirements.txt (line 1)) (0.27.0)
-Requirement already satisfied: typing-extensions>=4.8.0 in ./venv/lib/python3.11/site-packages (from fastapi==0.104.1->-r requirements.txt (line 1)) (4.14.1)
-Requirement already satisfied: annotated-types>=0.4.0 in ./venv/lib/python3.11/site-packages (from pydantic==2.5.0->-r requirements.txt (line 7)) (0.7.0)
-Requirement already satisfied: pydantic-core==2.14.1 in ./venv/lib/python3.11/site-packages (from pydantic==2.5.0->-r requirements.txt (line 7)) (2.14.1)
-Requirement already satisfied: click>=7.0 in ./venv/lib/python3.11/site-packages (from uvicorn==0.24.0->uvicorn[standard]==0.24.0->-r requirements.txt (line 2)) (8.2.1)
-Requirement already satisfied: h11>=0.8 in ./venv/lib/python3.11/site-packages (from uvicorn==0.24.0->uvicorn[standard]==0.24.0->-r requirements.txt (line 2)) (0.16.0)
-Requirement already satisfied: greenlet!=0.4.17 in ./venv/lib/python3.11/site-packages (from sqlalchemy==2.0.23->-r requirements.txt (line 3)) (3.2.4)
-Requirement already satisfied: Mako in ./venv/lib/python3.11/site-packages (from alembic==1.12.1->-r requirements.txt (line 4)) (1.3.10)
-Requirement already satisfied: httptools>=0.5.0 in ./venv/lib/python3.11/site-packages (from uvicorn[standard]==0.24.0->-r requirements.txt (line 2)) (0.6.4)
-Requirement already satisfied: python-dotenv>=0.13 in ./venv/lib/python3.11/site-packages (from uvicorn[standard]==0.24.0->-r requirements.txt (line 2)) (1.1.1)
-Requirement already satisfied: pyyaml>=5.1 in ./venv/lib/python3.11/site-packages (from uvicorn[standard]==0.24.0->-r requirements.txt (line 2)) (6.0.2)
-Requirement already satisfied: uvloop!=0.15.0,!=0.15.1,>=0.14.0 in ./venv/lib/python3.11/site-packages (from uvicorn[standard]==0.24.0->-r requirements.txt (line 2)) (0.21.0)
-Requirement already satisfied: watchfiles>=0.13 in ./venv/lib/python3.11/site-packages (from uvicorn[standard]==0.24.0->-r requirements.txt (line 2)) (1.1.0)
-Requirement already satisfied: idna>=2.8 in ./venv/lib/python3.11/site-packages (from anyio<4.0.0,>=3.7.1->fastapi==0.104.1->-r requirements.txt (line 1)) (3.10)
-Requirement already satisfied: sniffio>=1.1 in ./venv/lib/python3.11/site-packages (from anyio<4.0.0,>=3.7.1->fastapi==0.104.1->-r requirements.txt (line 1)) (1.3.1)
-Requirement already satisfied: MarkupSafe>=0.9.2 in ./venv/lib/python3.11/site-packages (from Mako->alembic==1.12.1->-r requirements.txt (line 4)) (3.0.2)
-+ log 'Frontend Node.js...'
-+ echo -e '\033[0;32m[INFO]\033[0m Frontend Node.js...'
-[INFO] Frontend Node.js...
-+ cd /opt/virtual-lab-manager/frontend/virtual-lab-frontend
-+ sudo -u vlm pnpm install
-Lockfile is up to date, resolution step is skipped
-Already up to date
-
-╭ Warning ───────────────────────────────────────────────────────────────────────────────────╮
-│                                                                                            │
-│   Ignored build scripts: @tailwindcss/oxide, esbuild.                                      │
-│   Run "pnpm approve-builds" to pick which dependencies should be allowed to run scripts.   │
-│                                                                                            │
-╰────────────────────────────────────────────────────────────────────────────────────────────╯
-
-Done in 625ms using pnpm v10.4.1
-+ sudo -u vlm pnpm run build
-
-> virtual-lab-frontend@0.0.0 build /opt/virtual-lab-manager/frontend/virtual-lab-frontend
-> vite build
-
-vite v6.3.5 building for production...
-✓ 1815 modules transformed.
-dist/index.html                   0.47 kB │ gzip:   0.30 kB
-dist/assets/index-C2zG38ge.css  100.92 kB │ gzip:  16.90 kB
-dist/assets/index-D6fpj8ot.js   748.68 kB │ gzip: 219.70 kB
-
-(!) Some chunks are larger than 500 kB after minification. Consider:
-- Using dynamic import() to code-split the application
-- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
-- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
-✓ built in 2.87s
-+ configure_environment
-install.sh: ligne 228: configure_environment : commande introuvable
-+ setup_services
-+ log 'Configuration des services systemd...'
-+ echo -e '\033[0;32m[INFO]\033[0m Configuration des services systemd...'
-[INFO] Configuration des services systemd...
-+ cat
-+ cat
-+ systemctl daemon-reload
-+ systemctl enable --now vlm-backend
-Job for vlm-backend.service failed because of unavailable resources or another system error.
-See "systemctl status vlm-backend.service" and "journalctl -xeu vlm-backend.service" for details.
-+ systemctl enable --now vlm-frontend
-+ log 'Installation terminée !'
-+ echo -e '\033[0;32m[INFO]\033[0m Installation terminée !'
-[INFO] Installation terminée !
-+ echo -e '\033[0;34mAccès via : http://localhost:3000\033[0m'
-Accès via : http://localhost:3000
-+ echo -e '\033[1;33mDB User: vlm_user / Password: sYC3MIffV65skeK9pFx9jWfKP5Yx24Zn4m+OHHsLNc4=\033[0m'
-DB User: vlm_user / Password: sYC3MIffV65skeK9pFx9jWfKP5Yx24Zn4m+OHHsLNc4=
-
+août 19 16:24:15 lab-test systemd[1]: Failed to start vlm-backend.service - Virtual Lab Manager Backend.
+root@lab-test:/home/test/Téléchargements/virtual-lab-manager-main# journalctl -xeu vlm-backend.service
+░░ 
+░░ The unit vlm-backend.service has entered the 'failed' state with result 'resources'.
+août 19 16:24:25 lab-test systemd[1]: Failed to start vlm-backend.service - Virtual Lab Manager Backend.
+░░ Subject: L'unité (unit) vlm-backend.service a échoué
+░░ Defined-By: systemd
+░░ Support: https://www.debian.org/support
+░░ 
+░░ L'unité (unit) vlm-backend.service a échoué, avec le résultat failed.
+août 19 16:24:35 lab-test systemd[1]: vlm-backend.service: Scheduled restart job, restart counter is at 117.
+░░ Subject: Le redémarrage automatique d'une unité (unit) a été planifié
+░░ Defined-By: systemd
+░░ Support: https://www.debian.org/support
+░░ 
+░░ Le redémarrage automatique de l'unité (unit) vlm-backend.service a été planifié, en
+░░ raison de sa configuration avec le paramètre Restart=.
+août 19 16:24:35 lab-test systemd[1]: Stopped vlm-backend.service - Virtual Lab Manager Backend.
+░░ Subject: L'unité (unit) vlm-backend.service a terminé son arrêt
+░░ Defined-By: systemd
+░░ Support: https://www.debian.org/support
+░░ 
+░░ L'unité (unit) vlm-backend.service a terminé son arrêt.
+août 19 16:24:35 lab-test systemd[1]: vlm-backend.service: Failed to load environment files: No such file or directory
+août 19 16:24:35 lab-test systemd[1]: vlm-backend.service: Failed to run 'start' task: No such file or directory
+août 19 16:24:35 lab-test systemd[1]: vlm-backend.service: Failed with result 'resources'.
+░░ Subject: Unit failed
+░░ Defined-By: systemd
+░░ Support: https://www.debian.org/support
+░░ 
+░░ The unit vlm-backend.service has entered the 'failed' state with result 'resources'.
+août 19 16:24:35 lab-test systemd[1]: Failed to start vlm-backend.service - Virtual Lab Manager Backend.
+░░ Subject: L'unité (unit) vlm-backend.service a échoué
+░░ Defined-By: systemd
+░░ Support: https://www.debian.org/support
+░░ 
+░░ L'unité (unit) vlm-backend.service a échoué, avec le résultat failed.
