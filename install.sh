@@ -163,8 +163,49 @@ install_application() {
 # Installation services
 setup_services() {
     log "Configuration des services systemd..."
-    cp $INSTALL_DIR/deploy/vlm-backend.service /etc/systemd/system/
-    cp $INSTALL_DIR/deploy/vlm-frontend.service /etc/systemd/system/
+    
+    # Service backend
+    cat > /etc/systemd/system/vlm-backend.service << EOF
+[Unit]
+Description=Virtual Lab Manager Backend
+After=network.target postgresql.service
+Requires=postgresql.service
+
+[Service]
+Type=simple
+User=$SERVICE_USER
+Group=$SERVICE_USER
+WorkingDirectory=$INSTALL_DIR/backend
+Environment=PATH=$INSTALL_DIR/backend/venv/bin
+EnvironmentFile=$INSTALL_DIR/.env
+ExecStart=$INSTALL_DIR/backend/venv/bin/python main.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+    # Service frontend
+    cat > /etc/systemd/system/vlm-frontend.service << EOF
+[Unit]
+Description=Virtual Lab Manager Frontend
+After=network.target
+
+[Service]
+Type=simple
+User=$SERVICE_USER
+Group=$SERVICE_USER
+WorkingDirectory=$INSTALL_DIR/frontend/virtual-lab-frontend
+Environment=PATH=/usr/bin:/usr/local/bin
+ExecStart=/usr/bin/pnpm run preview --host 0.0.0.0 --port 3000
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+EOF
+    
     systemctl daemon-reload
     systemctl enable --now vlm-backend
     systemctl enable --now vlm-frontend
