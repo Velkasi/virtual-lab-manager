@@ -1,0 +1,95 @@
+Prompt de développement
+
+Développe une application web de gestion et déploiement de labs virtuels avec les caractéristiques suivantes :
+
+Objectif général
+
+Fournir une interface web intuitive permettant de créer, configurer et gérer des laboratoires virtuels personnalisés.
+
+Chaque lab peut contenir plusieurs machines virtuelles avec un hardware défini (CPU, RAM, disque, etc.) et des noms personnalisés.
+
+L’application doit permettre :
+
+L’accès SSH et VNC directement depuis le navigateur.
+
+La persistance des machines (pas d’écrasement ni perte de données lors d’un refresh).
+
+L’importation d’un fichier YAML décrivant la configuration logicielle (via Ansible).
+
+Le déploiement réel avec Terraform et Ansible, visible pour l’utilisateur.
+
+La gestion d’état des VMs (start/stop/restart).
+
+Contraintes techniques
+
+L’application sera déployée sur une machine Debian (32 Go RAM, 200 Go SSD, Intel i7 12ᵉ gen).
+
+Les technologies principales :
+
+Terraform pour l’infrastructure (création des VMs).
+
+Ansible pour la configuration logicielle automatisée.
+
+QEMU/KVM + libvirt (ou Proxmox API si disponible) pour gérer la virtualisation.
+
+Backend : Python (FastAPI ou Django) ou Go.
+
+Frontend : React + Tailwind avec intégration VNC/SSH via noVNC / xterm.js.
+
+Base de données : PostgreSQL (pour persistance des labs et états des VMs).
+
+Fonctionnalités clés
+
+Interface web
+
+Création de labs depuis l’UI avec choix :
+
+Nombre de VMs.
+
+Hardware de chaque VM (RAM, vCPU, disque).
+
+Nom et tags.
+
+Importation d’un fichier YAML décrivant les rôles Ansible pour configurer les machines.
+
+Visualisation en temps réel du déploiement (progress bar/logs Terraform et Ansible).
+
+Accès SSH et VNC intégré dans le navigateur.
+
+Gestion des VMs
+
+Lister les VMs actives.
+
+Start / Stop / Restart depuis l’interface.
+
+Persistance de l’état (la VM redémarre, mais son disque et config persistent).
+
+Intégration Terraform/Ansible
+
+Backend déclenche Terraform pour créer la topologie définie.
+
+Après création, exécuter automatiquement Ansible avec le YAML fourni.
+
+Retourner les logs Terraform + Ansible dans l’UI.
+
+Robustesse
+
+Pas de perte des machines lors d’un refresh du navigateur.
+
+Sauvegarde de l’état des labs en DB.
+
+Reconnexion automatique aux sessions VNC/SSH actives.
+
+Déploiement
+
+L’application doit être installable sur une Debian.
+
+Fournir un script d’installation (bash/ansible) pour déployer l’app, ses dépendances (Terraform, Ansible, libvirt, noVNC, DB).
+
+Bonus (si possible)
+
+Templates de labs prédéfinis (ex : cluster Kubernetes, labo réseau, environnement de pentest).
+
+Support de snapshots des VMs.
+
+Gestion multi-utilisateurs avec authentification (OAuth2 ou LDAP).
