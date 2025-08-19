@@ -6,11 +6,11 @@
 set -e
 
 # Couleurs pour l'affichage
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-NC='\033[0m'
+RED=\'\\033[0;31m\'
+GREEN=\'\\033[0;32m\'
+YELLOW=\'\\033[1;33m\'
+BLUE=\'\\033[0;34m\'
+NC=\'\\033[0m\' # No Color
 
 # Variables de configuration
 INSTALL_DIR="/opt/virtual-lab-manager"
@@ -31,7 +31,7 @@ check_root() {
     fi
 }
 check_debian() {
-    if ! grep -q "Debian\|Ubuntu" /etc/os-release; then
+    if ! grep -q "Debian\\|Ubuntu" /etc/os-release; then
         error "Ce script est conçu pour Debian/Ubuntu uniquement"
     fi
     log "Distribution compatible détectée"
@@ -45,7 +45,7 @@ update_system() {
 }
 
 # Installation de Python
-install_python() {
+install_python( ) {
     log "Installation de Python 3.11 et pip..."
     apt install -y python3.11 python3.11-venv python3.11-dev python3-pip
     if ! command -v python3 &>/dev/null; then
@@ -59,7 +59,7 @@ install_nodejs() {
     curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
     apt install -y nodejs
     npm install -g pnpm
-    log "Node.js $(node --version) et pnpm installés"
+    log "Node.js $(node --version ) et pnpm installés"
 }
 
 # Installation PostgreSQL
@@ -69,10 +69,10 @@ install_postgresql() {
     systemctl enable --now postgresql
 
     log "Configuration de la base de données..."
-    sudo -u postgres psql -tc "SELECT 1 FROM pg_database WHERE datname = '$DB_NAME';" | grep -q 1 || \
+    sudo -u postgres psql -tc "SELECT 1 FROM pg_database WHERE datname = \'$DB_NAME\';" | grep -q 1 || \
         sudo -u postgres psql -c "CREATE DATABASE $DB_NAME;"
-    sudo -u postgres psql -tc "SELECT 1 FROM pg_roles WHERE rolname = '$DB_USER';" | grep -q 1 || \
-        sudo -u postgres psql -c "CREATE USER $DB_USER WITH PASSWORD '$DB_PASSWORD';"
+    sudo -u postgres psql -tc "SELECT 1 FROM pg_roles WHERE rolname = \'$DB_USER\';" | grep -q 1 || \
+        sudo -u postgres psql -c "CREATE USER $DB_USER WITH PASSWORD \'$DB_PASSWORD\';"
     sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE $DB_NAME TO $DB_USER;"
     sudo -u postgres psql -c "ALTER USER $DB_USER CREATEDB;"
 }
@@ -81,14 +81,14 @@ install_postgresql() {
 install_terraform() {
     log "Installation de Terraform..."
     wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-    echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/hashicorp.list
+    echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs ) main" | tee /etc/apt/sources.list.d/hashicorp.list
     apt update
     apt install -y terraform
 }
 
 # Installation Ansible
 install_ansible() {
-    log "Installation d'Ansible..."
+    log "Installation d\'Ansible..."
     apt install -y ansible
 }
 
@@ -127,8 +127,8 @@ install_novnc() {
 }
 
 # Création utilisateur système
-create_user() {
-    log "Création de l'utilisateur $SERVICE_USER..."
+create_user( ) {
+    log "Création de l\'utilisateur $SERVICE_USER..."
     export PATH=$PATH:/usr/sbin:/sbin
     for grp in libvirt kvm; do
         getent group $grp >/dev/null || /usr/sbin/groupadd $grp
@@ -141,7 +141,7 @@ create_user() {
     chown -R $SERVICE_USER:$SERVICE_USER /home/$SERVICE_USER
 }
 
-# Installation de l’application
+# Installation de l\'application
 install_application() {
     log "Installation de Virtual Lab Manager..."
     mkdir -p $INSTALL_DIR
@@ -160,15 +160,15 @@ install_application() {
     sudo -u $SERVICE_USER pnpm run build
 }
 
-# Configuration des variables d'environnement
+# Configuration des variables d\'environnement
 configure_environment() {
-    log "Configuration des variables d'environnement..."
+    log "Configuration des variables d\'environnement..."
     
     cat > $INSTALL_DIR/.env << EOF
 # Configuration de la base de données
 DATABASE_URL=postgresql://$DB_USER:$DB_PASSWORD@localhost/$DB_NAME
 
-# Configuration de l'application
+# Configuration de l\'application
 SECRET_KEY=$(openssl rand -base64 32)
 DEBUG=false
 ALLOWED_HOSTS=localhost,127.0.0.1
@@ -187,8 +187,9 @@ EOF
     chown $SERVICE_USER:$SERVICE_USER $INSTALL_DIR/.env
     chmod 600 $INSTALL_DIR/.env
     
-    log "Variables d'environnement configurées"
+    log "Variables d\'environnement configurées"
 }
+
 # Installation services
 setup_services() {
     log "Configuration des services systemd..."
@@ -254,6 +255,7 @@ install_virtualization
 install_libvirt_python_dependencies
 install_novnc
 install_application
+configure_environment
 setup_services
 
 log "Installation terminée !"
