@@ -160,6 +160,35 @@ install_application() {
     sudo -u $SERVICE_USER pnpm run build
 }
 
+# Configuration des variables d'environnement
+configure_environment() {
+    log "Configuration des variables d'environnement..."
+    
+    cat > $INSTALL_DIR/.env << EOF
+# Configuration de la base de données
+DATABASE_URL=postgresql://$DB_USER:$DB_PASSWORD@localhost/$DB_NAME
+
+# Configuration de l'application
+SECRET_KEY=$(openssl rand -base64 32)
+DEBUG=false
+ALLOWED_HOSTS=localhost,127.0.0.1
+
+# Configuration des chemins
+TERRAFORM_PATH=/usr/bin/terraform
+ANSIBLE_PATH=/usr/bin/ansible-playbook
+LIBVIRT_URI=qemu:///system
+
+# Configuration réseau
+BACKEND_HOST=0.0.0.0
+BACKEND_PORT=8000
+FRONTEND_PORT=3000
+EOF
+    
+    chown $SERVICE_USER:$SERVICE_USER $INSTALL_DIR/.env
+    chmod 600 $INSTALL_DIR/.env
+    
+    log "Variables d'environnement configurées"
+}
 # Installation services
 setup_services() {
     log "Configuration des services systemd..."
