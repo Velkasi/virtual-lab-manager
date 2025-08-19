@@ -157,17 +157,20 @@ install_novnc() {
 create_user() {
     log "Création de l'utilisateur système $SERVICE_USER..."
 
+    # Ajouter /usr/sbin et /sbin au PATH pour s'assurer que useradd et groupadd sont trouvés
+    export PATH=$PATH:/usr/sbin:/sbin
+
     # Créer les groupes si nécessaire
     for grp in libvirt kvm; do
         if ! getent group $grp >/dev/null; then
-            groupadd $grp
+            /usr/sbin/groupadd $grp
         fi
     done
 
     # Créer l'utilisateur si il n'existe pas
     if ! id "$SERVICE_USER" &>/dev/null; then
-        useradd -r -s /bin/bash -d /home/$SERVICE_USER -m $SERVICE_USER
-        usermod -aG libvirt,kvm $SERVICE_USER
+        /usr/sbin/useradd -r -s /bin/bash -d /home/$SERVICE_USER -m $SERVICE_USER
+        /usr/sbin/usermod -aG libvirt,kvm $SERVICE_USER
     fi
 
     # Créer les répertoires nécessaires
